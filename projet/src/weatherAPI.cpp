@@ -1,4 +1,4 @@
-#include "weatherAPI.h"
+#include "projet/inc/weatherAPI.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
