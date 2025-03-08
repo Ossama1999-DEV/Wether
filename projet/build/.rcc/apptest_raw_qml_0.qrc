@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/projet1QtWether/">
+    <file alias="main.qml">/home/oussama/Wether/main.qml</file>
+    <file alias="CurrentWeather.qml">/home/oussama/Wether/CurrentWeather.qml</file>
+    <file alias="Forecast.qml">/home/oussama/Wether/Forecast.qml</file>
+    <file alias="SearchScreen.qml">/home/oussama/Wether/SearchScreen.qml</file>
+  </qresource>
+</RCC>
+

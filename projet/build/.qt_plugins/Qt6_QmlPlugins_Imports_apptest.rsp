@@ -1,0 +1,14 @@
+-rootPath
+/home/oussama/Wether
+-cmake-output
+-output-file
+/home/oussama/Wether/build/.qt_plugins/Qt6_QmlPlugins_Imports_apptest.cmake
+-importPath
+/home/oussama/Wether/build/projet1QtWether
+-importPath
+/home/oussama/Wether/build
+-importPath
+/usr/lib/x86_64-linux-gnu/qt6/qml
+-qrcFiles
+/home/oussama/Wether/build/.rcc/qmake_projet1QtWether.qrc
+/home/oussama/Wether/build/.rcc/apptest_raw_qml_0.qrc
