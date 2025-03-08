@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<WeatherAPI>("projet1QtWether", 1, 0, "WeatherAPI");
 
     QQmlApplicationEngine engine;
-    const QUrl url(u"qrc:/projet1QtWether/main.qml"_qs);
+    const QUrl url(u"qrc:/projet/main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(projet1QtWether VERSION 0.1 LANGUAGES CXX)
+project(projet VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
@@ -11,20 +11,20 @@ set(ENV{QT_QPA_PLATFORM} "xcb")
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Network QuickControls2)
 
 qt_add_executable(apptest
-    main.cpp
-    weatherAPI.cpp
-    weatherAPI.h
-    weatherdata.cpp
-    weatherdata.h
+    projet/src/main.cpp
+    projet/src/weatherAPI.cpp
+    projet/src/weatherdata.cpp
+    projet/inc/weatherAPI.h
+    projet/inc/weatherdata.h
 )
 
 qt_add_qml_module(apptest
-    URI projet1QtWether
+    URI projet
     VERSION 1.0
-    QML_FILES main.qml
-    CurrentWeather.qml
-    Forecast.qml
-    SearchScreen.qml
+    QML_FILES projet/qml/main.qml
+    projet/qml/CurrentWeather.qml
+    projet/qml/Forecast.qml
+    projet/qml/SearchScreen.qml
 )
 
 set_target_properties(apptest PROPERTIES
