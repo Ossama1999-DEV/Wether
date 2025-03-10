@@ -1,0 +1,4 @@
+<qresource prefix="/images">
+   <file>images/sunny.png</file>
+   <file>images/night.png</file>
+</qresource>

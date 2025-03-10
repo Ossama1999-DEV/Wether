@@ -1,10 +1,12 @@
 #include "projet/inc/weatherdata.h"
 
-WeatherData::WeatherData(QObject *parent) : QObject(parent), m_temperature(0.0) {}
+WeatherData::WeatherData(QObject *parent) : QObject(parent) {}
 
-QString WeatherData::city() const {
-    return m_city;
-}
+QString WeatherData::city() const { return m_city; }
+QString WeatherData::temperature() const { return m_temperature; }
+QString WeatherData::condition() const { return m_condition; }
+QString WeatherData::icon() const { return m_icon; }
+QList<ForecastEntry> WeatherData::forecast() const { return m_forecast; }
 
 void WeatherData::setCity(const QString &city) {
     if (m_city != city) {
@@ -13,19 +15,11 @@ void WeatherData::setCity(const QString &city) {
     }
 }
 
-double WeatherData::temperature() const {
-    return m_temperature;
-}
-
-void WeatherData::setTemperature(double temperature) {
+void WeatherData::setTemperature(const QString &temperature) {
     if (m_temperature != temperature) {
         m_temperature = temperature;
         emit temperatureChanged();
     }
-}
-
-QString WeatherData::condition() const {
-    return m_condition;
 }
 
 void WeatherData::setCondition(const QString &condition) {
@@ -35,10 +29,6 @@ void WeatherData::setCondition(const QString &condition) {
     }
 }
 
-QString WeatherData::icon() const {
-    return m_icon;
-}
-
 void WeatherData::setIcon(const QString &icon) {
     if (m_icon != icon) {
         m_icon = icon;
@@ -46,11 +36,7 @@ void WeatherData::setIcon(const QString &icon) {
     }
 }
 
-QVector<ForecastEntry> WeatherData::forecast() const {
-    return m_forecast;
-}
-
-void WeatherData::setForecast(const QVector<ForecastEntry> &forecast) {
+void WeatherData::setForecast(const QList<ForecastEntry> &forecast) {
     m_forecast = forecast;
     emit forecastChanged();
 }

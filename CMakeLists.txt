@@ -14,7 +14,10 @@ qt_add_executable(apptest
     projet/src/main.cpp
     projet/src/weatherAPI.cpp
     projet/src/weatherdata.cpp
+    projet/src/forecastmodel.cpp
     projet/inc/weatherAPI.h
+    projet/inc/forecastday.h
+    projet/inc/forecastmodel.h
     projet/inc/weatherdata.h
 )
 
@@ -43,3 +46,6 @@ install(TARGETS apptest
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+qt_add_resources(APP_RESOURCES resources.qrc)
+
