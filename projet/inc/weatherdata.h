@@ -1,3 +1,10 @@
+/**
+ * @file weatherdata.h
+ * @brief Déclaration de la classe WeatherData
+ * @version 1.0
+ * @date 2021-03-08
+ * @author Ossama1999-DEV
+ */
 #ifndef WEATHERDATA_H
 #define WEATHERDATA_H
 

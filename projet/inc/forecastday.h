@@ -1,3 +1,10 @@
+/**
+ * @file forecastday.h
+ * @brief Déclaration de la classe ForecastDay
+ * @version 1.0
+ * @date 2021-03-08
+ * @author Ossama1999-DEV
+ */
 #ifndef FORECASTDAY_H
 #define FORECASTDAY_H
 

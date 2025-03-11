@@ -1,3 +1,10 @@
+/**
+ * @file weatherAPI.h
+ * @brief Déclaration de la classe WeatherAPI
+ * @version 1.0
+ * @date 2021-03-08
+ * @author Ossama1999-DEV
+ */
 #ifndef WEATHERAPI_H
 #define WEATHERAPI_H
 
