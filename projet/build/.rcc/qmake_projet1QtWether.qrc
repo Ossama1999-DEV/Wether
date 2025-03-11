@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="/projet1QtWether">
-    <file alias="qmldir">/home/oussama/Wether/build/projet1QtWether/qmldir</file>
-  </qresource>
-</RCC>
-

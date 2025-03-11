@@ -1,7 +1,0 @@
-module projet1QtWether
-typeinfo apptest.qmltypes
-prefer :/projet1QtWether/
-CurrentWeather 1.0 CurrentWeather.qml
-Forecast 1.0 Forecast.qml
-SearchScreen 1.0 SearchScreen.qml
-

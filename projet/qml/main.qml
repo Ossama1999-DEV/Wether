@@ -1,16 +1,20 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-//import QtQuick.Effects 1.0
-import projet1QtWether 1.0
-
+import projet 1.0
 
 ApplicationWindow {
+    id: appWindow
     visible: true
     width: 450
     height: 700
-    color: weatherAPI.isDay ? "#87CEEB" : "#2C3E50"  // Bleu jour / Bleu nuit
     title: qsTr("🌤️ Weather Dashboard")
+    color: weatherAPI.isDay ? "#87CEEB" : "#2C3E50"
+
+    // Déclaration de l'objet backend
+    WeatherAPI {
+        id: weatherAPI
+    }
 
     StackView {
         id: stack
@@ -62,7 +66,8 @@ ApplicationWindow {
             Image {
                 source: isDay ? "qrc:/images/sunny.png" : "qrc:/images/night.png"
                 anchors.fill: parent
-                opacity: 0.5
+                opacity: 0.2
+                fillMode: Image.PreserveAspectCrop
             }
 
             ColumnLayout {
@@ -112,7 +117,6 @@ ApplicationWindow {
             ListView {
                 anchors.fill: parent
                 model: weatherAPI.forecastDays
-
                 delegate: Rectangle {
                     width: parent.width
                     height: 80
@@ -123,17 +127,18 @@ ApplicationWindow {
                         spacing: 20
 
                         Image {
-                            source: model.iconUrl
-                            width: 50; height: 50
+                            source: iconUrl
+                            width: 50
+                            height: 50
                         }
 
                         Column {
-                            Text { text: model.date; font.bold: true }
-                            Text { text: model.condition }
+                            Text { text: date; font.bold: true }
+                            Text { text: condition }
                         }
 
                         Text {
-                            text: model.tempMin + "°C / " + model.tempMax + "°C"
+                            text: tempMin + "°C / " + tempMax + "°C"
                             font.bold: true
                         }
                     }
@@ -156,11 +161,7 @@ ApplicationWindow {
         }
 
         function onErrorOccurred(message) {
-            console.error("Erreur réseau : " + message);
+            console.error("❌ Error: " + message);
         }
-    }
-
-    WeatherAPI {
-        id: weatherAPI
     }
 }

@@ -1,4 +1,4 @@
-#include "weatherdata.h"
+#include "projet/inc/weatherdata.h"
 
 WeatherData::WeatherData(QObject *parent) : QObject(parent), m_temperature(0.0) {}
 
