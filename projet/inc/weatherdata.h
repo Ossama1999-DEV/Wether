@@ -1,48 +1,41 @@
-/**
- * @file weatherdata.h
- * @brief Déclaration de la classe WeatherData
- * @version 1.0
- * @date 2021-03-08
- * @author Ossama1999-DEV
- */
 #ifndef WEATHERDATA_H
 #define WEATHERDATA_H
 
 #include <QObject>
 #include <QString>
-#include <QList>
+#include <QVector>
 
 struct ForecastEntry {
     QString date;
-    QString condition;
-    QString iconUrl;
-    QString tempMin;
-    QString tempMax;
+    double temperature;
+    QString icon;
 };
 
 class WeatherData : public QObject {
     Q_OBJECT
-
     Q_PROPERTY(QString city READ city WRITE setCity NOTIFY cityChanged)
-    Q_PROPERTY(QString temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
+    Q_PROPERTY(double temperature READ temperature WRITE setTemperature NOTIFY temperatureChanged)
     Q_PROPERTY(QString condition READ condition WRITE setCondition NOTIFY conditionChanged)
     Q_PROPERTY(QString icon READ icon WRITE setIcon NOTIFY iconChanged)
-    Q_PROPERTY(QList<ForecastEntry> forecast READ forecast WRITE setForecast NOTIFY forecastChanged)
+    Q_PROPERTY(QVector<ForecastEntry> forecast READ forecast WRITE setForecast NOTIFY forecastChanged)
 
 public:
     explicit WeatherData(QObject *parent = nullptr);
 
     QString city() const;
-    QString temperature() const;
-    QString condition() const;
-    QString icon() const;
-    QList<ForecastEntry> forecast() const;
-
     void setCity(const QString &city);
-    void setTemperature(const QString &temperature);
+
+    double temperature() const;
+    void setTemperature(double temperature);
+
+    QString condition() const;
     void setCondition(const QString &condition);
+
+    QString icon() const;
     void setIcon(const QString &icon);
-    void setForecast(const QList<ForecastEntry> &forecast);
+
+    QVector<ForecastEntry> forecast() const;
+    void setForecast(const QVector<ForecastEntry> &forecast);
 
 signals:
     void cityChanged();
@@ -53,10 +46,10 @@ signals:
 
 private:
     QString m_city;
-    QString m_temperature;
+    double m_temperature;
     QString m_condition;
     QString m_icon;
-    QList<ForecastEntry> m_forecast;
+    QVector<ForecastEntry> m_forecast;
 };
 
 #endif // WEATHERDATA_H
