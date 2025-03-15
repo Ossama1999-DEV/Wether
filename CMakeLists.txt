@@ -11,6 +11,7 @@ set(ENV{QT_QPA_PLATFORM} "xcb")
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Network QuickControls2)
 
 qt_add_executable(apptest
+<<<<<<< HEAD
     projet/src/main.cpp
     projet/src/weatherAPI.cpp
     projet/src/weatherdata.cpp
@@ -19,6 +20,21 @@ qt_add_executable(apptest
     projet/inc/forecastday.h
     projet/inc/forecastmodel.h
     projet/inc/weatherdata.h
+=======
+    #source files
+    projet/src/main.cpp
+    projet/src/weatherAPI.cpp
+    projet/src/weatherdata.cpp
+    projet/src/forecastday.cpp
+    projet/src/forecastmodel.cpp
+
+    #include files
+    projet/inc/weatherdata.h
+    projet/inc/weatherAPI.h
+    projet/inc/forecastday.h
+    projet/inc/forecastmodel.h
+    
+>>>>>>> 509121c7ac4979d0a2562979307a3fcf4abb78db
 )
 
 qt_add_qml_module(apptest
