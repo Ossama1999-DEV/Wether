@@ -14,10 +14,12 @@ qt_add_executable(apptest
     projet/src/main.cpp
     projet/src/weatherAPI.cpp
     projet/src/weatherdata.cpp
-    # projet/src/forecastmodel.cpp
+    projet/src/forecastday.cpp
+    projet/src/forecastmodel.cpp
+
     projet/inc/weatherAPI.h
-    # projet/inc/forecastday.h
-    # projet/inc/forecastmodel.h
+    projet/inc/forecastday.h
+    projet/inc/forecastmodel.h
     projet/inc/weatherdata.h
 )
 

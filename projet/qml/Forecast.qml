@@ -1,60 +1,40 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
+import projet1QtWether 1.0
 
 Item {
-    ListView {
+    id: forecastScreen
+    property string city: ""  // obligatoire !
+
+    Column {
         anchors.fill: parent
-        model: weatherAPI.forecastDays
+        spacing: 10
+        padding: 15
 
-        delegate: Rectangle {
-            width: parent.width
-            height: 80
-            color: index % 2 === 0 ? "#ffffff" : "#f0f8ff"
+        Text {
+            text: "Prévisions météo pour " + forecastScreen.city
+            font.pixelSize: 20
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
 
-            Row {
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: 20
+        ListView {
+            anchors.fill: parent
+            model: ForecastModel { cityName: forecastScreen.city }
 
-                Image {
-                    source: model.iconUrl
-                    width: 50; height: 50
+            delegate: Rectangle {
+                width: parent.width
+                height: 40
+                color: index % 2 === 0 ? "#f0f0f0" : "#ffffff"
+
+                Row {
+                    anchors.fill: parent
+                    spacing: 10
+                    padding: 5
+
+                    Text { text: day; font.bold: true }
+                    Text { text: condition }
+                    Text { text: temp + " °C"; anchors.right: parent.right }
                 }
-
-                Column {
-                    Text { text: model.date; font.bold: true }
-                    Text { text: model.condition }
-                }
-
-                // Par ceci:
-                /*
-                Item {
-                    //Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }*/
-
-                Text {
-                    text: model.tempMin + "°C / " + model.tempMax + "°C"
-                    font.bold: true
-                }
-
-                Connections {
-                    target: weatherAPI
-
-                    function onWeatherDataFetched(cityName, temperature, condition, iconUrl) {
-                        // Traiter les données ici, par exemple :
-                        stackView.push("CurrentWeather.qml", {
-                            city: cityName,
-                            temp: temperature,
-                            conditionText: condition,
-                            weatherIcon: iconUrl
-                        });
-                    }
-
-                    function onErrorOccurred(errorMsg) {
-                        console.log("Erreur réseau : ", errorMsg);
-                    }
-                }
-
             }
         }
     }

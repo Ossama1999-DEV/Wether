@@ -98,8 +98,14 @@ ApplicationWindow {
 
                 Button {
                     text: "📅 Voir prévisions"
-                    onClicked: stack.push(forecastScreen)
+                    anchors.bottom: parent.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    onClicked: {
+                        stack.push("Forecast.qml", { city: weatherAPI.cityName });
+                    }
                 }
+
             }
         }
     }

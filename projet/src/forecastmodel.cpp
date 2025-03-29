@@ -1,38 +1,55 @@
-#include "projet/inc/forecastmodel.h"
+#include "../inc/forecastmodel.h"
+#include "../inc/weatherAPI.h"
 
-ForecastModel::ForecastModel(QObject *parent) : QAbstractListModel(parent) {}
+ForecastModel::ForecastModel(QObject *parent)
+    : QAbstractListModel(parent) {
+    connect(this, &ForecastModel::cityNameChanged, this, &ForecastModel::updateForecast);
+}
 
 int ForecastModel::rowCount(const QModelIndex &) const {
-    return m_data.size();
+    return m_forecastList.size();
 }
 
 QVariant ForecastModel::data(const QModelIndex &index, int role) const {
-    if (!index.isValid() || index.row() >= m_data.size())
-        return {};
+    if (!index.isValid() || index.row() >= m_forecastList.size())
+        return QVariant();
 
-    const ForecastDay &item = m_data[index.row()];
+    const ForecastDay &day = m_forecastList.at(index.row());
+
     switch (role) {
-        case DateRole: return item.date;
-        case TempMinRole: return item.tempMin;
-        case TempMaxRole: return item.tempMax;
-        case ConditionRole: return item.condition;
-        case IconUrlRole: return item.iconUrl;
-        default: return {};
+        case DayRole:
+            return day.day();
+        case ConditionRole:
+            return day.condition();
+        case TempRole:
+            return day.temp();
+        default:
+            return QVariant();
     }
 }
 
-void ForecastModel::setForecastData(const QList<ForecastDay> &data) {
-    beginResetModel();
-    m_data = data;
-    endResetModel();
+QHash<int, QByteArray> ForecastModel::roleNames() const {
+    QHash<int, QByteArray> roles;
+    roles[DayRole] = "day";
+    roles[ConditionRole] = "condition";
+    roles[TempRole] = "temp";
+    return roles;
 }
 
-QHash<int, QByteArray> ForecastModel::roleNames() const {
-    return {
-        {DateRole, "date"},
-        {TempMinRole, "tempMin"},
-        {TempMaxRole, "tempMax"},
-        {ConditionRole, "condition"},
-        {IconUrlRole, "iconUrl"}
-    };
+QString ForecastModel::cityName() const {
+    return m_cityName;
+}
+
+void ForecastModel::setCityName(const QString &city) {
+    if (m_cityName != city) {
+        m_cityName = city;
+        emit cityNameChanged();
+    }
+}
+
+void ForecastModel::updateForecast() {
+    beginResetModel();
+    WeatherAPI api;
+    m_forecastList = api.getForecastForCity(m_cityName); // Implémente cette méthode dans WeatherAPI
+    endResetModel();
 }
