@@ -46,3 +46,10 @@ install(TARGETS apptest
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+qt_add_resources(apptest "resources"
+    PREFIX "/images"
+    FILES
+        projet/images/sunny.png
+        projet/images/night.png
+)

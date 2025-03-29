@@ -60,7 +60,9 @@ ApplicationWindow {
             color: isDay ? "#87CEEB" : "#2C3E50"
 
             Image {
-                source: isDay ? "qrc:/images/sunny.png" : "qrc:/images/night.png"
+                source: (new Date().getHours() >= 6 && new Date().getHours() < 19) ?
+                    "qrc:/images/projet/images/sunny.png" :
+                    "qrc:/images/projet/images/night.png"
                 anchors.fill: parent
                 opacity: 0.5
             }

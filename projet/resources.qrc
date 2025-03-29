@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/images">
+    <file>/home/oussama/Wether/projet/images/sunny.png</file>
+    <file>/home/oussama/Wether/projet/images/night.png</file>
+  </qresource>
+</RCC>
