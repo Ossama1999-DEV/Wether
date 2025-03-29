@@ -1,5 +1,10 @@
 #include "../inc/forecastmodel.h"
 #include "../inc/weatherAPI.h"
+#include <QLocale>
+#include <QDate>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 ForecastModel::ForecastModel(QObject *parent)
     : QAbstractListModel(parent) {
@@ -7,14 +12,14 @@ ForecastModel::ForecastModel(QObject *parent)
 }
 
 int ForecastModel::rowCount(const QModelIndex &) const {
-    return m_forecastList.size();
+    return m_forecastDays.size();
 }
 
 QVariant ForecastModel::data(const QModelIndex &index, int role) const {
-    if (!index.isValid() || index.row() >= m_forecastList.size())
+    if (!index.isValid() || index.row() >= m_forecastDays.size())
         return QVariant();
 
-    const ForecastDay &day = m_forecastList.at(index.row());
+    const ForecastDay &day = m_forecastDays.at(index.row());
 
     switch (role) {
         case DayRole:
@@ -48,8 +53,40 @@ void ForecastModel::setCityName(const QString &city) {
 }
 
 void ForecastModel::updateForecast() {
-    beginResetModel();
-    WeatherAPI api;
-    m_forecastList = api.getForecastForCity(m_cityName); // Implémente cette méthode dans WeatherAPI
-    endResetModel();
+    const QString apiKey = "35a2ea1e8bf748c6917132034250803";
+    QString url = QString("http://api.weatherapi.com/v1/forecast.json?key=%1&q=%2&days=5&aqi=no&alerts=no")
+                      .arg(apiKey, m_cityName);
+
+    QNetworkRequest request{QUrl(url)};
+    QNetworkReply *reply = m_manager.get(request);
+
+    connect(reply, &QNetworkReply::finished, [this, reply]() {
+        parseNetworkReply(reply);
+        reply->deleteLater();
+    });
+}
+
+void ForecastModel::parseNetworkReply(QNetworkReply *reply) {
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray jsonResponse = reply->readAll();
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonResponse);
+        QJsonArray forecastArray = jsonDoc.object()["forecast"].toObject()["forecastday"].toArray();
+
+        beginResetModel();
+        m_forecastDays.clear();
+        for (const QJsonValue &val : forecastArray) {
+            QJsonObject dayObj = val.toObject();
+
+            QString dateStr = dayObj["date"].toString();
+            QDate date = QDate::fromString(dateStr, "yyyy-MM-dd");
+            QString shortDayName = QLocale("fr_FR").toString(date, "ddd");
+
+            QString condition = dayObj["day"].toObject()["condition"].toObject()["text"].toString();
+            QString temp = QString::number(dayObj["day"].toObject()["avgtemp_c"].toDouble(), 'f', 1);
+
+            ForecastDay day(shortDayName, condition, temp);
+            m_forecastDays.append(day);
+        }
+        endResetModel();
+    }
 }

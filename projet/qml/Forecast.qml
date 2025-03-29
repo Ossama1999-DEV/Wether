@@ -44,7 +44,6 @@ Page {
             color: "#ffffff"
             border.color: "#dddddd"
             border.width: 1
-            //elevation: 5
 
             RowLayout {
                 anchors.fill: parent
@@ -60,8 +59,9 @@ Page {
 
                     Text {
                         anchors.centerIn: parent
-                        text: day
+                        text: day // Affiche désormais Lun, Mar, etc.
                         font.pixelSize: 14
+                        font.bold: true
                         color: "white"
                     }
                 }
