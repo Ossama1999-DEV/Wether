@@ -1,41 +1,93 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 import projet1QtWether 1.0
 
-Item {
+Page {
     id: forecastScreen
-    property string city: ""  // obligatoire !
+    property string city: ""
 
-    Column {
-        anchors.fill: parent
-        spacing: 10
-        padding: 15
-
-        Text {
-            text: "Prévisions météo pour " + forecastScreen.city
-            font.pixelSize: 20
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
-
-        ListView {
+    header: ToolBar {
+        RowLayout {
             anchors.fill: parent
-            model: ForecastModel { cityName: forecastScreen.city }
+            ToolButton {
+                text: "← Retour"
+                font.pixelSize: 16
+                onClicked: stack.pop()
+            }
+            Label {
+                text: "Prévisions pour " + forecastScreen.city
+                font.pixelSize: 18
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            }
+        }
+    }
 
-            delegate: Rectangle {
-                width: parent.width
-                height: 40
-                color: index % 2 === 0 ? "#f0f0f0" : "#ffffff"
+    background: Rectangle {
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#87CEFA" }
+            GradientStop { position: 1.0; color: "#E0FFFF" }
+        }
+    }
 
-                Row {
-                    anchors.fill: parent
-                    spacing: 10
-                    padding: 5
+    ListView {
+        id: forecastList
+        anchors.fill: parent
+        anchors.margins: 10
+        spacing: 10
+        model: ForecastModel { cityName: forecastScreen.city }
 
-                    Text { text: day; font.bold: true }
-                    Text { text: condition }
-                    Text { text: temp + " °C"; anchors.right: parent.right }
+        delegate: Rectangle {
+            width: parent.width
+            height: 70
+            radius: 10
+            color: "#ffffff"
+            border.color: "#dddddd"
+            border.width: 1
+            //elevation: 5
+
+            RowLayout {
+                anchors.fill: parent
+                anchors.margins: 10
+                spacing: 20
+
+                Rectangle {
+                    width: 50
+                    height: 50
+                    radius: 25
+                    color: "#87CEEB"
+                    Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: day
+                        font.pixelSize: 14
+                        color: "white"
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 5
+
+                    Text {
+                        text: condition
+                        font.pixelSize: 16
+                        font.bold: true
+                        color: "#333333"
+                    }
+
+                    Text {
+                        text: temp + " °C"
+                        font.pixelSize: 14
+                        color: "#555555"
+                    }
                 }
             }
+        }
+
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AlwaysOn
         }
     }
 }
