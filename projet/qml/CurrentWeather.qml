@@ -1,40 +1,59 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
-Item {
-    property alias cityName: cityName.text
-    property alias temperatureText: temperature.text
-    property alias weatherConditionText: weatherCondition.text
-    property alias weatherIconUrl: weatherIcon.source
+Page {
+    id: currentWeatherScreen
+
+    header: ToolBar {
+        RowLayout {
+            anchors.fill: parent
+
+            ToolButton {
+                text: "← Retour"
+                font.pixelSize: 16
+                onClicked: stack.pop() // Retour vers SearchScreen.qml
+            }
+
+            Label {
+                text: "Météo actuelle"
+                font.pixelSize: 18
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            }
+        }
+    }
 
     ColumnLayout {
         anchors.centerIn: parent
-        spacing: 12
+        spacing: 10
 
-        Text {
-            id: cityName
-            font.pixelSize: 24
+        Image {
+            id: weatherIcon
+            source: iconUrl
+            width: 100
+            height: 100
+        }
+
+        Label {
+            id: cityLabel
+            text: city
+            font.pixelSize: 32
             font.bold: true
             horizontalAlignment: Text.AlignHCenter
         }
 
-        Image {
-            id: weatherIcon
-            width: 100
-            height: 100
-            fillMode: Image.PreserveAspectFit
+        Label {
+            id: temperatureLabel
+            text: temperature
+            font.pixelSize: 28
+            horizontalAlignment: Text.AlignHCenter
         }
 
-        Text {
-            id: temperature
-            font.pixelSize: 32
-            font.bold: true
-        }
-
-        Text {
-            id: weatherCondition
+        Label {
+            id: conditionLabel
+            text: condition
             font.pixelSize: 20
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 }

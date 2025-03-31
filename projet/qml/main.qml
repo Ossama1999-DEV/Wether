@@ -40,7 +40,10 @@ ApplicationWindow {
                 Button {
                     text: "🔍 Get Weather"
                     Layout.alignment: Qt.AlignHCenter
-                    onClicked: weatherAPI.fetchWeather(cityInput.text)
+                    onClicked: {
+                                weatherAPI.fetchWeather(cityInput.text);
+                                stack.push(currentWeatherScreen);  // ← ajoute précisément cette ligne !
+                    }
                 }
             }
         }
