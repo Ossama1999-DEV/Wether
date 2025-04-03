@@ -100,7 +100,7 @@ ApplicationWindow {
                 }
 
                 Button {
-                    text: "📅 Voir prévisions"
+                    text: "📅 All days"
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
 
@@ -108,7 +108,13 @@ ApplicationWindow {
                         stack.push("Forecast.qml", { city: weatherAPI.cityName });
                     }
                 }
-
+                Button {
+                text: "Retour"
+                width: 400
+                onClicked: {
+                        stack.push("SearchScreen.qml", { city: weatherAPI.cityName });
+                    }
+                }
             }
         }
     }

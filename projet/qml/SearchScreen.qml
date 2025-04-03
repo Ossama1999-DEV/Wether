@@ -5,6 +5,7 @@ import Qt5Compat.GraphicalEffects
 Item {
     width: 450
     height: 700
+    property string city: ""
     Column {
         anchors.centerIn: parent
         spacing: 20

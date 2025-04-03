@@ -4,56 +4,66 @@ import QtQuick.Layouts
 
 Page {
     id: currentWeatherScreen
+    property string city: ""
+    property string temperature: ""
+    property string condition: ""
+    property string iconUrl: ""
 
-    header: ToolBar {
-        RowLayout {
-            anchors.fill: parent
-
-            ToolButton {
-                text: "← Retour"
-                font.pixelSize: 16
-                onClicked: stack.pop() // Retour vers SearchScreen.qml
-            }
-
-            Label {
-                text: "Météo actuelle"
-                font.pixelSize: 18
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            }
+    background: Rectangle {
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#87CEEB" }
+            GradientStop { position: 1.0; color: "#E0FFFF" }
         }
     }
 
     ColumnLayout {
         anchors.centerIn: parent
-        spacing: 10
+        spacing: 15
 
         Image {
-            id: weatherIcon
             source: iconUrl
-            width: 100
-            height: 100
+            width: 80
+            height: 80
+            Layout.alignment: Qt.AlignHCenter
         }
 
         Label {
-            id: cityLabel
             text: city
-            font.pixelSize: 32
-            font.bold: true
-            horizontalAlignment: Text.AlignHCenter
-        }
-
-        Label {
-            id: temperatureLabel
-            text: temperature
             font.pixelSize: 28
-            horizontalAlignment: Text.AlignHCenter
+            font.bold: true
+            color: "#ffffff"
+            Layout.alignment: Qt.AlignHCenter
         }
 
         Label {
-            id: conditionLabel
+            text: temperature + " °C"
+            font.pixelSize: 32
+            color: "#ffffff"
+            Layout.alignment: Qt.AlignHCenter
+        }
+
+        Label {
             text: condition
             font.pixelSize: 20
-            horizontalAlignment: Text.AlignHCenter
+            color: "#ffffff"
+            Layout.alignment: Qt.AlignHCenter
         }
+
+        RowLayout {
+            spacing: 20
+            Layout.alignment: Qt.AlignHCenter
+
+            Button {
+                text: "📅 All days"
+                onClicked: stack.push("Forecast.qml", { city: city })
+            }
+
+            Button {
+                text: "Retour"
+                width: 400
+                onClicked: weatherAPI.fetchWeather(cityInput.text)
+            }
+        }
+
     }
 }
